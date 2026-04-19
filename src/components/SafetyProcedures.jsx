@@ -84,28 +84,8 @@ const SafetyProcedures = ({ onClose }) => {
       ]
     },
     {
-      id: 'contacts',
-      title: '4. Emergency Contact Information',
-      icon: <Phone color="var(--safety-green)" />,
-      color: 'var(--safety-green)',
-      content: [
-        { subtitle: 'Emergency Services:', items: [
-          '112 – National emergency helpline',
-          '100 – Police',
-          '101 – Fire',
-          '108 – Ambulance / medical emergency',
-          '1091 – Women’s helpline'
-        ]},
-        { subtitle: 'Building Resources:', items: [
-          'Building Security: Ext. 555',
-          'Site Manager: +1 (555) 123-4567',
-          'First Aid Officer: Duty Room 102'
-        ]}
-      ]
-    },
-    {
       id: 'general',
-      title: '5. General Safety Rules',
+      title: '4. General Safety Rules',
       icon: <HelpCircle color="var(--text-secondary)" />,
       color: 'var(--text-secondary)',
       content: [

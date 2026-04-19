@@ -84,8 +84,23 @@ const SafetyProcedures = ({ onClose }) => {
       ]
     },
     {
+      id: 'contacts',
+      title: '4. Emergency Contact Information',
+      icon: <Phone color="var(--safety-green)" />,
+      color: 'var(--safety-green)',
+      content: [
+        { subtitle: 'Emergency Services:', items: [
+          '112 – National emergency helpline',
+          '100 – Police',
+          '101 – Fire',
+          '108 – Ambulance / medical emergency',
+          '1091 – Women’s helpline'
+        ]}
+      ]
+    },
+    {
       id: 'general',
-      title: '4. General Safety Rules',
+      title: '5. General Safety Rules',
       icon: <HelpCircle color="var(--text-secondary)" />,
       color: 'var(--text-secondary)',
       content: [

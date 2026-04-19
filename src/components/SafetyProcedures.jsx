@@ -90,9 +90,11 @@ const SafetyProcedures = ({ onClose }) => {
       color: 'var(--safety-green)',
       content: [
         { subtitle: 'Emergency Services:', items: [
-          'Fire Department: 911 / 101',
-          'Ambulance: 911 / 102',
-          'Police: 911 / 103'
+          '112 – National emergency helpline',
+          '100 – Police',
+          '101 – Fire',
+          '108 – Ambulance / medical emergency',
+          '1091 – Women’s helpline'
         ]},
         { subtitle: 'Building Resources:', items: [
           'Building Security: Ext. 555',

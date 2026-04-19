@@ -3,10 +3,12 @@ import ManagerDashboard from './views/ManagerDashboard';
 import StaffInterface from './views/StaffInterface';
 import GuestPortal from './views/GuestPortal';
 import AlertBanner from './components/AlertBanner';
+import SafetyProcedures from './components/SafetyProcedures';
 
 function App() {
   const [role, setRole] = useState('MANAGER'); // 'MANAGER', 'STAFF', 'GUEST'
   const [isOffline, setIsOffline] = useState(false);
+  const [showSafety, setShowSafety] = useState(false);
   const [activeIncidents, setActiveIncidents] = useState([
     {
       id: 1,
@@ -25,6 +27,8 @@ function App() {
   const resolveIncident = (id) => {
     setActiveIncidents(activeIncidents.filter(inc => inc.id !== id));
   };
+
+  const toggleSafety = () => setShowSafety(!showSafety);
 
   return (
     <div className="app-container">
@@ -56,10 +60,12 @@ function App() {
 
       <AlertBanner incidents={activeIncidents} />
 
+      {showSafety && <SafetyProcedures onClose={toggleSafety} />}
+
       <main>
-        {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} />}
-        {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} />}
-        {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} />}
+        {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} />}
+        {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
+        {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
       </main>
     </div>
   );

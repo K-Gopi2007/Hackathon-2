@@ -1,13 +1,32 @@
 import React from 'react';
 import { Activity, Shield, Users, Clock, Terminal } from 'lucide-react';
 
-const ManagerDashboard = ({ incidents, onResolve }) => {
+const ManagerDashboard = ({ incidents, onResolve, onToggleSafety }) => {
   return (
     <div className="dashboard-view" style={{ padding: '24px' }}>
       <header style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1 style={{ fontSize: '2rem' }}>Crisis Management Command Center</h1>
-          <p style={{ color: 'var(--text-secondary)' }}>Real-time monitoring and resource allocation</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+          <div>
+            <h1 style={{ fontSize: '2rem' }}>Crisis Management Command Center</h1>
+            <p style={{ color: 'var(--text-secondary)' }}>Real-time monitoring and resource allocation</p>
+          </div>
+          <button 
+            onClick={onToggleSafety}
+            style={{ 
+              background: 'var(--bg-elevated)', 
+              color: 'var(--text-secondary)',
+              border: '1px solid var(--glass-border)',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+          >
+            <Shield size={14} /> Protocols
+          </button>
         </div>
         <div className="status-badge" style={{ background: 'var(--bg-elevated)', padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ width: 10, height: 10, borderRadius: '50%', background: incidents.length > 0 ? 'var(--crisis-red)' : 'var(--safety-green)' }}></div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, Phone, Navigation, Info } from 'lucide-react';
 
-const GuestPortal = ({ activeIncidents }) => {
+const GuestPortal = ({ activeIncidents, onToggleSafety }) => {
   return (
     <div className="guest-view" style={{ padding: '24px', maxWidth: '600px', margin: '0 auto' }}>
       <header style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -42,7 +42,7 @@ const GuestPortal = ({ activeIncidents }) => {
           <div style={{ marginLeft: 'auto', fontWeight: 'bold', color: 'var(--info-blue)' }}>CALL</div>
         </div>
 
-        <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div className="card" onClick={onToggleSafety} style={{ display: 'flex', alignItems: 'center', gap: '20px', cursor: 'pointer' }}>
           <div style={{ padding: '12px', background: 'rgba(255, 149, 0, 0.1)', borderRadius: '12px' }}>
             <Info color="var(--alert-orange)" />
           </div>

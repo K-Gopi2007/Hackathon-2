@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle, Flame, Heart, ShieldAlert, MessageSquare } from 'lucide-react';
 
-const StaffInterface = ({ onTrigger, activeIncidents }) => {
+const StaffInterface = ({ onTrigger, activeIncidents, onToggleSafety }) => {
   const [showOptions, setShowOptions] = useState(false);
 
   const handlePanic = (type) => {
@@ -98,6 +98,9 @@ const StaffInterface = ({ onTrigger, activeIncidents }) => {
         <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
           <button className="btn btn-primary" style={{ flex: 1, gap: '8px' }}>
             <MessageSquare size={18} /> Staff Chat
+          </button>
+          <button className="btn" onClick={onToggleSafety} style={{ flex: 1, gap: '8px', background: 'var(--bg-elevated)', color: 'white', border: '1px solid var(--glass-border)' }}>
+            <ShieldAlert size={18} /> Protocols
           </button>
         </div>
       </div>

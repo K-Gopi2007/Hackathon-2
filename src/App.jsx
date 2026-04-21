@@ -32,6 +32,9 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="landscape-bg"></div>
+      <div className="landscape-overlay"></div>
+
       {/* Role Switcher (Demo Only) */}
       <div className="role-switcher" style={{
         position: 'fixed',

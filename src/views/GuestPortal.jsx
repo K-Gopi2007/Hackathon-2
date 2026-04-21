@@ -3,10 +3,10 @@ import { Map, Phone, Navigation, Info } from 'lucide-react';
 
 const GuestPortal = ({ activeIncidents, onToggleSafety }) => {
   return (
-    <div className="guest-view" style={{ padding: '24px', maxWidth: '600px', margin: '0 auto' }}>
+    <div className="guest-view" style={{ padding: '24px', maxWidth: '600px', margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <header style={{ textAlign: 'center', marginBottom: '32px' }}>
-        <h1 style={{ fontSize: '1.8rem' }}>Safety & Support Portal</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Grand Plaza Resort & Spa</p>
+        <h1 style={{ fontSize: '2.4rem', fontWeight: '800', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>Safety & Support</h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', letterSpacing: '0.1em' }}>GRAND PLAZA RESORT & SPA</p>
       </header>
 
       {activeIncidents.length > 0 && (
@@ -20,7 +20,7 @@ const GuestPortal = ({ activeIncidents, onToggleSafety }) => {
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
-        <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ padding: '12px', background: 'rgba(52, 199, 89, 0.1)', borderRadius: '12px' }}>
             <Map color="var(--safety-green)" />
           </div>
@@ -31,7 +31,7 @@ const GuestPortal = ({ activeIncidents, onToggleSafety }) => {
           <Navigation style={{ marginLeft: 'auto' }} size={18} />
         </div>
 
-        <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ padding: '12px', background: 'rgba(0, 122, 255, 0.1)', borderRadius: '12px' }}>
             <Phone color="var(--info-blue)" />
           </div>

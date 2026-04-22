@@ -54,7 +54,16 @@ const GuestPortal = ({ activeIncidents, onToggleSafety }) => {
         </motion.div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
+      <div className="card glass-panel" style={{ marginTop: '24px', padding: '24px', background: 'rgba(255, 255, 255, 0.02)' }}>
+        <h4 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Info size={20} color="var(--info-blue)" /> 24/7 Guest Support
+        </h4>
+        <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+          Our dedicated Safety & Support Team is available around the clock to assist you. Whether you need immediate medical attention, have a safety concern, or simply requires information about our resort's emergency protocols, we are just a tap away. Your security is our highest priority at Grand Plaza Resort & Spa.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', marginTop: '24px' }}>
         <motion.div whileHover={{ x: 10 }} className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '24px', cursor: 'pointer' }}>
           <div style={{ padding: '16px', background: 'rgba(52, 199, 89, 0.1)', borderRadius: '16px' }}>
             <Map color="var(--safety-green)" size={32} />

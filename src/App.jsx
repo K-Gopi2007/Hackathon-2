@@ -10,23 +10,16 @@ function App() {
   const [role, setRole] = useState('MANAGER'); // 'MANAGER', 'STAFF', 'GUEST'
   const [isOffline, setIsOffline] = useState(false);
   const [showSafety, setShowSafety] = useState(false);
-  const [activeIncidents, setActiveIncidents] = useState([]);
-
-  // Mock initial data - using a stable effect to avoid render impurity
-  React.useEffect(() => {
-    if (activeIncidents.length === 0) {
-      setActiveIncidents([{
-        id: 1,
-        type: 'FIRE',
-        location: 'Kitchen - Floor 1',
-        status: 'IN_PROGRESS',
-        timestamp: new Date().toISOString(),
-        priority: 'CRITICAL',
-        reporter: 'Chef Mario',
-        description: 'Grease fire in main kitchen area. Suppression system activated.'
-      }]);
-    }
-  }, [activeIncidents.length]);
+  const [activeIncidents, setActiveIncidents] = useState([{
+    id: 1,
+    type: 'FIRE',
+    location: 'Kitchen - Floor 1',
+    status: 'IN_PROGRESS',
+    timestamp: new Date().toISOString(),
+    priority: 'CRITICAL',
+    reporter: 'Chef Mario',
+    description: 'Grease fire in main kitchen area. Suppression system activated.'
+  }]);
 
   const triggerAlert = (payload) => {
     let newIncident;

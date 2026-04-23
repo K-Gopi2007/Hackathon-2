@@ -26,7 +26,7 @@ function App() {
         description: 'Grease fire in main kitchen area. Suppression system activated.'
       }]);
     }
-  }, []);
+  }, [activeIncidents.length]);
 
   const triggerAlert = (type) => {
     const newIncident = {

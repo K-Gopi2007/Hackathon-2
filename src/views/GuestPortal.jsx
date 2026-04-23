@@ -1,13 +1,63 @@
-import { Map, Phone, Navigation, Info, Sun, ShieldAlert, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { Map, Phone, Navigation, Info, Sun, ShieldAlert, ChevronRight, Flame } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import FireShield from '../components/FireShield/FireShield';
 
-const GuestPortal = ({ activeIncidents, onToggleSafety }) => {
+const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => {
+  const [showFireShield, setShowFireShield] = useState(false);
+
+  if (showFireShield) {
+    return (
+      <div className="guest-view" style={{ minHeight: '100vh', background: 'var(--bg-deep)' }}>
+        <header style={{ padding: 'var(--space-md)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--glass-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Flame color="var(--crisis-red)" />
+            <span style={{ fontWeight: 800, letterSpacing: '0.1em' }}>FIRE SHIELD</span>
+          </div>
+          <button className="btn" onClick={() => setShowFireShield(false)} style={{ padding: '4px 12px', fontSize: '0.8rem' }}>Exit</button>
+        </header>
+        <FireShield onReportTriggered={(data) => {
+          onReportTriggered(data);
+          setShowFireShield(false);
+        }} />
+      </div>
+    );
+  }
+
   return (
     <div className="guest-view animate-slide-up" style={{ padding: 'var(--space-lg)', maxWidth: '800px', margin: '0 auto', minHeight: 'calc(100vh - 120px)' }}>
       <header style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
         <h1 className="text-gradient" style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '8px' }}>Guest Safety</h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', letterSpacing: '0.2em', fontWeight: 600 }}>GRAND PLAZA RESORT & SPA</p>
       </header>
+
+      {/* FIRE SHIELD CTA - HIGH PRIORITY */}
+      <motion.div 
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => setShowFireShield(true)}
+        className="card" 
+        style={{ 
+          background: 'var(--crisis-red)', 
+          color: 'white', 
+          padding: '24px', 
+          marginBottom: '24px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '20px',
+          cursor: 'pointer',
+          boxShadow: '0 8px 32px var(--crisis-red-glow)'
+        }}
+      >
+        <div style={{ padding: '12px', background: 'rgba(255,255,255,0.2)', borderRadius: '12px' }}>
+          <Flame size={40} fill="white" />
+        </div>
+        <div style={{ flex: 1 }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>FIRE REPORT</h2>
+          <p style={{ opacity: 0.9, fontSize: '0.9rem' }}>Instant emergency coordinate transmission</p>
+        </div>
+        <ChevronRight size={32} />
+      </motion.div>
 
       {/* Weather & Status Widget */}
       <div className="card glass-panel" style={{ 

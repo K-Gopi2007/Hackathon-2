@@ -67,7 +67,7 @@ function App() {
         {showSafety && <SafetyProcedures onClose={toggleSafety} />}
 
         <div className="view-content">
-          {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} />}
+          {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} onTrigger={triggerAlert} />}
           {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
           {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} onToggleSafety={toggleSafety} onReportTriggered={triggerAlert} />}
         </div>

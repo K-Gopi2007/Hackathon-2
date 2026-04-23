@@ -1,7 +1,7 @@
-import { Activity, Shield, Users, Clock, Terminal } from 'lucide-react';
+import { Activity, Shield, Users, Clock, Terminal, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const ManagerDashboard = ({ incidents, onResolve, onToggleSafety }) => {
+const ManagerDashboard = ({ incidents, onResolve, onToggleSafety, onTrigger }) => {
   return (
     <div className="dashboard-view" style={{ padding: '24px' }}>
       <header style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -10,23 +10,45 @@ const ManagerDashboard = ({ incidents, onResolve, onToggleSafety }) => {
             <h1 style={{ fontSize: '2rem' }}>Crisis Management Command Center</h1>
             <p style={{ color: 'var(--text-secondary)' }}>Real-time monitoring and resource allocation</p>
           </div>
-          <button 
-            onClick={onToggleSafety}
-            style={{ 
-              background: 'var(--bg-elevated)', 
-              color: 'var(--text-secondary)',
-              border: '1px solid var(--glass-border)',
-              padding: '6px 12px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '0.8rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
-          >
-            <Shield size={14} /> Protocols
-          </button>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button 
+              onClick={() => onTrigger && onTrigger('SYSTEM_OVERRIDE')}
+              style={{ 
+                background: 'var(--crisis-red)', 
+                color: 'white',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontWeight: 'bold',
+                boxShadow: '0 4px 12px var(--crisis-red-glow)'
+              }}
+              className="pulse"
+            >
+              <AlertTriangle size={14} /> Emergency Alert
+            </button>
+            <button 
+              onClick={onToggleSafety}
+              style={{ 
+                background: 'var(--bg-elevated)', 
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--glass-border)',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+            >
+              <Shield size={14} /> Protocols
+            </button>
+          </div>
         </div>
         <div className="status-badge" style={{ background: 'var(--bg-elevated)', padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ width: 10, height: 10, borderRadius: '50%', background: incidents.length > 0 ? 'var(--crisis-red)' : 'var(--safety-green)' }}></div>

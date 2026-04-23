@@ -28,17 +28,32 @@ function App() {
     }
   }, [activeIncidents.length]);
 
-  const triggerAlert = (type) => {
-    const newIncident = {
-      id: Date.now(),
-      type: type,
-      location: 'Staff Area - Sector 7',
-      status: 'REPORTED',
-      timestamp: new Date().toISOString(),
-      priority: 'CRITICAL',
-      reporter: 'Staff On Duty',
-      description: 'Emergency signal triggered via mobile interface.'
-    };
+  const triggerAlert = (payload) => {
+    let newIncident;
+    if (typeof payload === 'string') {
+      newIncident = {
+        id: Date.now(),
+        type: payload,
+        location: 'Staff Area - Sector 7',
+        status: 'REPORTED',
+        timestamp: new Date().toISOString(),
+        priority: 'CRITICAL',
+        reporter: 'Staff On Duty',
+        description: 'Emergency signal triggered via mobile interface.'
+      };
+    } else {
+      newIncident = {
+        ...payload,
+        id: payload.id || Date.now(),
+        type: payload.fireType ? `FIRE - ${payload.fireType.toUpperCase()}` : 'FIRE',
+        location: payload.location || 'Unknown Location',
+        status: payload.status || 'REPORTED',
+        timestamp: payload.timestamp || new Date().toISOString(),
+        priority: payload.priority || 'CRITICAL',
+        reporter: 'Guest Portal',
+        description: `Guest emergency report. Injuries: ${payload.hasInjuries ? 'Yes' : 'No'}`
+      };
+    }
     setActiveIncidents([newIncident, ...activeIncidents]);
   };
 

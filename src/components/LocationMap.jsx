@@ -63,7 +63,7 @@ const LocationMap = ({ activeIncidents = [], interactive = false, onLocationSele
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
-            justifyChild: 'center',
+            justifyContent: 'center',
             zIndex: 10
           }}
           className="pulse"

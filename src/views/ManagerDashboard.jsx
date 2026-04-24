@@ -1,5 +1,6 @@
-import { Activity, Shield, Users, Clock, Terminal, AlertTriangle } from 'lucide-react';
+import { Activity, Shield, Users, Clock, Terminal, AlertTriangle, Map } from 'lucide-react';
 import { motion } from 'framer-motion';
+import LocationMap from '../components/LocationMap';
 
 const ManagerDashboard = ({ incidents, onResolve, onToggleSafety, onTrigger }) => {
   return (
@@ -103,6 +104,16 @@ const ManagerDashboard = ({ incidents, onResolve, onToggleSafety, onTrigger }) =
           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '8px' }}>96% readiness score</p>
         </div>
       </div>
+
+      {/* Live Operations Map Section */}
+      <section style={{ padding: '0 var(--space-lg) var(--space-lg)' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Map size={20} color="var(--crisis-red)" /> Live Operations Map
+        </h2>
+        <div className="card glass-panel" style={{ padding: 0, height: '400px', overflow: 'hidden', position: 'relative' }}>
+          <LocationMap activeIncidents={incidents} />
+        </div>
+      </section>
 
       <div className="main-content" style={{ marginTop: '0', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: 'var(--space-lg)', padding: '0 var(--space-lg) var(--space-lg)' }}>
         <section className="incident-log">

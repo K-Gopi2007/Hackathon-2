@@ -11,8 +11,8 @@ const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => 
       <div className="guest-view" style={{ minHeight: '100vh', background: 'var(--bg-deep)' }}>
         <header style={{ padding: 'var(--space-md)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--glass-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Flame color="var(--crisis-red)" />
-            <span style={{ fontWeight: 800, letterSpacing: '0.1em' }}>FIRE SHIELD</span>
+            <ShieldAlert color="var(--crisis-red)" />
+            <span style={{ fontWeight: 800, letterSpacing: '0.1em' }}>EMERGENCY REPORT</span>
           </div>
           <button className="btn" onClick={() => setShowFireShield(false)} style={{ padding: '4px 12px', fontSize: '0.8rem' }}>Exit</button>
         </header>
@@ -31,7 +31,7 @@ const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => 
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', letterSpacing: '0.2em', fontWeight: 600 }}>GRAND PLAZA RESORT & SPA</p>
       </header>
 
-      {/* FIRE SHIELD CTA - HIGH PRIORITY */}
+      {/* EMERGENCY REPORT CTA - HIGH PRIORITY */}
       <motion.div 
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -50,10 +50,10 @@ const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => 
         }}
       >
         <div style={{ padding: '12px', background: 'rgba(255,255,255,0.2)', borderRadius: '12px' }}>
-          <Flame size={40} fill="white" />
+          <ShieldAlert size={40} fill="white" />
         </div>
         <div style={{ flex: 1 }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>FIRE REPORT</h2>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>EMERGENCY REPORT</h2>
           <p style={{ opacity: 0.9, fontSize: '0.9rem' }}>Instant emergency coordinate transmission</p>
         </div>
         <ChevronRight size={32} />

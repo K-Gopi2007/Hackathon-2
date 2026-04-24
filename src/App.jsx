@@ -38,7 +38,7 @@ function App() {
       newIncident = {
         ...payload,
         id: payload.id || Date.now(),
-        type: payload.fireType ? `FIRE - ${payload.fireType.toUpperCase()}` : 'FIRE',
+        type: payload.emergencyType ? payload.emergencyType.toUpperCase() : (payload.type || 'EMERGENCY'),
         location: payload.location || 'Unknown Location',
         status: payload.status || 'REPORTED',
         timestamp: payload.timestamp || new Date().toISOString(),

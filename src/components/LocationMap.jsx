@@ -49,28 +49,47 @@ const LocationMap = ({ activeIncidents = [], interactive = false, onLocationSele
       </svg>
 
       {/* Existing Incidents */}
-      {activeIncidents.map(inc => (
-        <div 
-          key={inc.id}
-          style={{
-            position: 'absolute',
-            top: '45%',
-            left: '55%',
-            width: '24px',
-            height: '24px',
-            background: 'rgba(255, 59, 48, 0.2)',
-            border: '2px solid var(--crisis-red)',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 10
-          }}
-          className="pulse"
-        >
-          <div style={{ width: '8px', height: '8px', background: 'var(--crisis-red)', borderRadius: '50%', margin: 'auto' }}></div>
-        </div>
-      ))}
+      {activeIncidents.map(inc => {
+        // Generate pseudo-random position based on ID so they don't stack perfectly, 
+        // but remain consistent across renders
+        const xPos = (inc.id * 13.7) % 70 + 15; // 15% to 85%
+        const yPos = (inc.id * 17.3) % 70 + 15;
+        
+        let color = 'var(--info-blue)';
+        let glow = 'rgba(10, 132, 255, 0.2)';
+        if (inc.priority === 'CRITICAL' || inc.type?.includes('FIRE')) {
+          color = 'var(--crisis-red)';
+          glow = 'rgba(255, 59, 48, 0.2)';
+        } else if (inc.type?.includes('MEDICAL') || inc.priority === 'HIGH') {
+          color = 'var(--alert-orange)';
+          glow = 'rgba(255, 149, 0, 0.2)';
+        }
+
+        return (
+          <div 
+            key={inc.id}
+            style={{
+              position: 'absolute',
+              top: `${yPos}%`,
+              left: `${xPos}%`,
+              width: '24px',
+              height: '24px',
+              background: glow,
+              border: `2px solid ${color}`,
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              transform: 'translate(-50%, -50%)'
+            }}
+            className="pulse"
+            title={`${inc.type} - ${inc.location}`}
+          >
+            <div style={{ width: '8px', height: '8px', background: color, borderRadius: '50%', margin: 'auto' }}></div>
+          </div>
+        );
+      })}
 
       {/* Selected Location Pin */}
       {selectedPos && (

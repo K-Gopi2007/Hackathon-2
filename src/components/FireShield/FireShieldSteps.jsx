@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, MapPin, Camera, AlertTriangle, Mountain, TreePine, Building2, HelpCircle } from 'lucide-react';
+import { Flame, MapPin, Camera, AlertTriangle, Mountain, HelpCircle, Activity, ShieldAlert } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Step1Map = ({ onStartReport }) => {
@@ -13,7 +13,7 @@ export const Step1Map = ({ onStartReport }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          Tap on map to mark fire location
+          Tap on map to mark emergency location
         </motion.div>
         
         <motion.button 
@@ -21,9 +21,10 @@ export const Step1Map = ({ onStartReport }) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.95 }}
           onClick={onStartReport}
+          style={{ background: 'var(--crisis-red)', gap: '10px' }}
         >
-          <Flame size={32} fill="white" />
-          Fire Report
+          <AlertTriangle size={32} fill="white" />
+          Emergency Report
         </motion.button>
       </div>
     </div>
@@ -55,13 +56,14 @@ export const Step2Confirm = ({ location, onConfirm, onCancel }) => {
 };
 
 export const Step3Details = ({ onSubmit, onBack }) => {
-  const [fireType, setFireType] = React.useState('');
+  const [emergencyType, setEmergencyType] = React.useState('');
   const [hasInjuries, setHasInjuries] = React.useState(false);
 
   const types = [
-    { id: 'mountain', label: 'Mountain', icon: Mountain },
-    { id: 'forest', label: 'Forest', icon: TreePine },
-    { id: 'building', label: 'Building', icon: Building2 },
+    { id: 'fire', label: 'Fire', icon: Flame },
+    { id: 'medical', label: 'Medical', icon: Activity },
+    { id: 'security', label: 'Security', icon: ShieldAlert },
+    { id: 'natural', label: 'Natural', icon: Mountain },
     { id: 'others', label: 'Others', icon: HelpCircle },
   ];
 
@@ -77,13 +79,13 @@ export const Step3Details = ({ onSubmit, onBack }) => {
       </header>
 
       <div style={{ marginBottom: '24px' }}>
-        <label style={{ fontWeight: '600', marginBottom: '12px', display: 'block' }}>Fire Type</label>
-        <div className="fire-type-grid">
+        <label style={{ fontWeight: '600', marginBottom: '12px', display: 'block' }}>Emergency Type</label>
+        <div className="fire-type-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))' }}>
           {types.map(type => (
             <div 
               key={type.id} 
-              className={`fire-type-card ${fireType === type.id ? 'active' : ''}`}
-              onClick={() => setFireType(type.id)}
+              className={`fire-type-card ${emergencyType === type.id ? 'active' : ''}`}
+              onClick={() => setEmergencyType(type.id)}
             >
               <type.icon size={32} />
               <span>{type.label}</span>
@@ -111,19 +113,20 @@ export const Step3Details = ({ onSubmit, onBack }) => {
 
       <textarea 
         className="comment-box" 
-        placeholder="Optional: Any specific details (e.g., wind direction, visible smoke color)..."
+        placeholder="Optional: Any specific details (e.g., weapons involved, visible smoke color)..."
       ></textarea>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', marginBottom: '40px' }}>
         <button className="btn" onClick={onBack} style={{ background: 'var(--bg-accent)' }}>Back</button>
         <button 
           className="btn btn-danger" 
-          disabled={!fireType}
-          onClick={() => onSubmit({ fireType, hasInjuries })}
+          disabled={!emergencyType}
+          onClick={() => onSubmit({ emergencyType, hasInjuries })}
         >
-          Send Fire Report
+          Send Report
         </button>
       </div>
     </motion.div>
   );
 };
+

@@ -36,7 +36,7 @@ const FireShield = ({ onReportTriggered }) => {
     
     // Reset or show success
     setStep(1);
-    alert('FIRE REPORT SENT SUCCESSFULLY! Emergency services are being coordinated.');
+    alert('EMERGENCY REPORT SENT SUCCESSFULLY! Emergency services are being coordinated.');
   };
 
   return (

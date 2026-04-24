@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Map, Phone, Navigation, Info, Sun, ShieldAlert, ChevronRight, Flame } from 'lucide-react';
+import { Map, Phone, Navigation, Info, Sun, ShieldAlert, ChevronRight, Flame, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FireShield from '../components/FireShield/FireShield';
 import InteractiveEscapeMap from '../components/InteractiveEscapeMap';
@@ -7,6 +7,49 @@ import InteractiveEscapeMap from '../components/InteractiveEscapeMap';
 const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => {
   const [showFireShield, setShowFireShield] = useState(false);
   const [showEscapeMap, setShowEscapeMap] = useState(false);
+  const [showConcierge, setShowConcierge] = useState(false);
+
+  if (showConcierge) {
+    return (
+      <div className="guest-view animate-slide-up" style={{ minHeight: '100vh', background: 'var(--bg-deep)', display: 'flex', flexDirection: 'column' }}>
+        <header style={{ padding: 'var(--space-md)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--glass-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Phone color="var(--info-blue)" />
+            <span style={{ fontWeight: 800, letterSpacing: '0.1em' }}>EMERGENCY CONCIERGE</span>
+          </div>
+          <button className="btn" onClick={() => setShowConcierge(false)} style={{ padding: '4px 12px', fontSize: '0.8rem' }}>Exit</button>
+        </header>
+        <div style={{ padding: 'var(--space-lg)', maxWidth: '600px', margin: '0 auto', width: '100%' }}>
+          <h2 style={{ fontSize: '2rem', marginBottom: '8px', textAlign: 'center' }}>Direct Dial Directory</h2>
+          <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '32px' }}>Tap any number below to call immediately.</p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[
+              { title: 'National Emergency', num: '112', icon: <Phone size={24} />, color: 'var(--safety-green)' },
+              { title: 'Police Department', num: '100', icon: <ShieldAlert size={24} />, color: 'var(--info-blue)' },
+              { title: 'Fire Brigade', num: '101', icon: <Flame size={24} />, color: 'var(--crisis-red)' },
+              { title: 'Ambulance / Medical', num: '108', icon: <Heart size={24} />, color: 'var(--alert-orange)' },
+              { title: 'Women\'s Helpline', num: '1091', icon: <Info size={24} />, color: 'var(--text-secondary)' },
+              { title: 'Resort Front Desk', num: '9', icon: <Phone size={24} />, color: 'var(--info-blue)' }
+            ].map((contact, i) => (
+              <a key={i} href={`tel:${contact.num}`} style={{ textDecoration: 'none' }}>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="card glass-panel" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px', cursor: 'pointer', borderLeft: `4px solid ${contact.color}` }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div style={{ color: contact.color }}>{contact.icon}</div>
+                    <div>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>{contact.title}</div>
+                      <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Tap to call</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: contact.color }}>{contact.num}</div>
+                </motion.div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (showEscapeMap) {
     return (
@@ -144,7 +187,7 @@ const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => 
           <ChevronRight color="var(--text-tertiary)" />
         </motion.div>
 
-        <motion.div whileHover={{ x: 10 }} className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '24px', cursor: 'pointer' }}>
+        <motion.div onClick={() => setShowConcierge(true)} whileHover={{ x: 10 }} className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '24px', cursor: 'pointer' }}>
           <div style={{ padding: '16px', background: 'rgba(0, 122, 255, 0.1)', borderRadius: '16px' }}>
             <Phone color="var(--info-blue)" size={32} />
           </div>

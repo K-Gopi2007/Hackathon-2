@@ -44,7 +44,7 @@ const FireShield = ({ onReportTriggered }) => {
       {/* Background Map - persistent across steps 1 and 2 */}
       {(step === 1 || step === 2) && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
-          <LocationMap interactive={step === 1} onLocationSelect={(loc) => setIncidentData(prev => ({...prev, location: loc}))} />
+          <LocationMap interactive={step === 1} onLocationSelect={(data) => setIncidentData(prev => ({...prev, location: data.address, lat: data.lat, lng: data.lng}))} />
         </div>
       )}
 

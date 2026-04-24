@@ -1,121 +1,125 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+
+const containerStyle = {
+  width: '100%',
+  height: '100%'
+};
+
+// Default center to a specific location if no incidents exist
+const defaultCenter = {
+  lat: 39.1911,
+  lng: -106.8175
+};
 
 const LocationMap = ({ activeIncidents = [], interactive = false, onLocationSelect }) => {
-  const [selectedPos, setSelectedPos] = React.useState(null);
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "" // Empty string will show development mode
+  });
+
+  const [map, setMap] = useState(null);
+  const [selectedPos, setSelectedPos] = useState(null);
+
+  const onLoad = useCallback(function callback(map) {
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
 
   const handleMapClick = (e) => {
     if (!interactive) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
     
-    setSelectedPos({ x, y });
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    
+    setSelectedPos({ lat, lng });
+    
     if (onLocationSelect) {
-      onLocationSelect(`Coordinates: ${x.toFixed(1)}°N, ${y.toFixed(1)}°E`);
+      onLocationSelect({
+        address: `Coordinates: ${lat.toFixed(4)}°N, ${lng.toFixed(4)}°E`,
+        lat,
+        lng
+      });
     }
   };
+
+  if (!isLoaded) {
+    return (
+      <div className="location-map card" style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a1c' }}>
+        <div className="pulse" style={{ width: '20px', height: '20px', background: 'var(--info-blue)', borderRadius: '50%' }}></div>
+      </div>
+    );
+  }
+
+  // Calculate center based on incidents or default
+  const center = activeIncidents.length > 0 && activeIncidents[0].lat 
+    ? { lat: activeIncidents[0].lat, lng: activeIncidents[0].lng } 
+    : defaultCenter;
 
   return (
     <div 
       className="location-map card" 
-      onClick={handleMapClick}
       style={{ 
         height: '100%', 
         width: '100%',
         position: 'relative', 
         overflow: 'hidden', 
         padding: 0,
-        cursor: interactive ? 'crosshair' : 'default',
         background: '#1a1a1c'
       }}
     >
-      {/* Grid Pattern */}
-      <div style={{
-        position: 'absolute',
-        width: '200%',
-        height: '200%',
-        top: '-50%',
-        left: '-50%',
-        backgroundSize: '30px 30px',
-        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)',
-        transform: 'rotate(15deg)',
-      }}></div>
-      
-      {/* Abstract Topographic Lines */}
-      <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.1 }}>
-        <path d="M0,50 Q100,20 200,80 T400,30 T600,90" fill="none" stroke="white" strokeWidth="1" />
-        <path d="M0,150 Q150,100 300,180 T600,120" fill="none" stroke="white" strokeWidth="1" />
-        <path d="M-50,250 Q200,200 400,280 T700,220" fill="none" stroke="white" strokeWidth="1" />
-      </svg>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={16}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        onClick={handleMapClick}
+        options={{
+          disableDefaultUI: true,
+          zoomControl: true,
+          mapTypeId: 'satellite',
+          clickableIcons: false
+        }}
+      >
+        {/* Existing Incidents */}
+        {activeIncidents.map(inc => {
+          if (!inc.lat || !inc.lng) return null;
+          
+          let iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+          if (inc.priority === 'CRITICAL' || inc.type?.includes('FIRE')) {
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+          } else if (inc.type?.includes('MEDICAL') || inc.priority === 'HIGH') {
+            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+          }
 
-      {/* Existing Incidents */}
-      {activeIncidents.map(inc => {
-        // Generate pseudo-random position based on ID so they don't stack perfectly, 
-        // but remain consistent across renders
-        const xPos = (inc.id * 13.7) % 70 + 15; // 15% to 85%
-        const yPos = (inc.id * 17.3) % 70 + 15;
-        
-        let color = 'var(--info-blue)';
-        let glow = 'rgba(10, 132, 255, 0.2)';
-        if (inc.priority === 'CRITICAL' || inc.type?.includes('FIRE')) {
-          color = 'var(--crisis-red)';
-          glow = 'rgba(255, 59, 48, 0.2)';
-        } else if (inc.type?.includes('MEDICAL') || inc.priority === 'HIGH') {
-          color = 'var(--alert-orange)';
-          glow = 'rgba(255, 149, 0, 0.2)';
-        }
+          return (
+            <Marker
+              key={inc.id}
+              position={{ lat: inc.lat, lng: inc.lng }}
+              icon={{ url: iconUrl }}
+              title={`${inc.type} - ${inc.location}`}
+            />
+          );
+        })}
 
-        return (
-          <div 
-            key={inc.id}
-            style={{
-              position: 'absolute',
-              top: `${yPos}%`,
-              left: `${xPos}%`,
-              width: '24px',
-              height: '24px',
-              background: glow,
-              border: `2px solid ${color}`,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              transform: 'translate(-50%, -50%)'
-            }}
-            className="pulse"
-            title={`${inc.type} - ${inc.location}`}
-          >
-            <div style={{ width: '8px', height: '8px', background: color, borderRadius: '50%', margin: 'auto' }}></div>
-          </div>
-        );
-      })}
-
-      {/* Selected Location Pin */}
-      {selectedPos && (
-        <div 
-          style={{
-            position: 'absolute',
-            top: `${selectedPos.y}%`,
-            left: `${selectedPos.x}%`,
-            transform: 'translate(-50%, -100%)',
-            zIndex: 20,
-            color: 'var(--crisis-red)',
-            filter: 'drop-shadow(0 0 10px rgba(255,59,48,0.5))'
-          }}
-        >
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-9-7-9zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
-        </div>
-      )}
+        {/* Selected Location Pin */}
+        {selectedPos && (
+          <Marker
+            position={selectedPos}
+            icon={{ url: 'http://maps.google.com/mapfiles/ms/icons/red-pushpin.png' }}
+          />
+        )}
+      </GoogleMap>
 
       <div style={{ position: 'absolute', top: 20, left: 20, background: 'rgba(0,0,0,0.8)', padding: '6px 12px', borderRadius: '20px', fontSize: '0.75rem', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}>
-        GPS: ACTIVE • HIGH PRECISION
+        GPS: ACTIVE • SATELLITE VIEW
       </div>
     </div>
   );
 };
-
 
 export default LocationMap;

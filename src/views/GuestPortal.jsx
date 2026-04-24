@@ -2,9 +2,28 @@ import React, { useState } from 'react';
 import { Map, Phone, Navigation, Info, Sun, ShieldAlert, ChevronRight, Flame } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FireShield from '../components/FireShield/FireShield';
+import InteractiveEscapeMap from '../components/InteractiveEscapeMap';
 
 const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => {
   const [showFireShield, setShowFireShield] = useState(false);
+  const [showEscapeMap, setShowEscapeMap] = useState(false);
+
+  if (showEscapeMap) {
+    return (
+      <div className="guest-view" style={{ minHeight: '100vh', background: 'var(--bg-deep)', display: 'flex', flexDirection: 'column' }}>
+        <header style={{ padding: 'var(--space-md)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--glass-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Map color="var(--safety-green)" />
+            <span style={{ fontWeight: 800, letterSpacing: '0.1em' }}>ESCAPE ROUTE</span>
+          </div>
+          <button className="btn" onClick={() => setShowEscapeMap(false)} style={{ padding: '4px 12px', fontSize: '0.8rem' }}>Exit</button>
+        </header>
+        <div style={{ flex: 1, padding: 'var(--space-md)' }}>
+          <InteractiveEscapeMap />
+        </div>
+      </div>
+    );
+  }
 
   if (showFireShield) {
     return (
@@ -114,7 +133,7 @@ const GuestPortal = ({ activeIncidents, onToggleSafety, onReportTriggered }) => 
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', marginTop: '24px' }}>
-        <motion.div whileHover={{ x: 10 }} className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '24px', cursor: 'pointer' }}>
+        <motion.div onClick={() => setShowEscapeMap(true)} whileHover={{ x: 10 }} className="card glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '24px', cursor: 'pointer' }}>
           <div style={{ padding: '16px', background: 'rgba(52, 199, 89, 0.1)', borderRadius: '16px' }}>
             <Map color="var(--safety-green)" size={32} />
           </div>

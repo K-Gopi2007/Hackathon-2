@@ -64,8 +64,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="landscape-bg"></div>
-      <div className="landscape-overlay"></div>
+
 
       <MainLayout role={role} onToggleSafety={toggleSafety}>
         <AlertBanner incidents={activeIncidents} />

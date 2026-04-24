@@ -10,10 +10,10 @@
   --info-blue-glow: rgba(0, 122, 255, 0.4);
   
   /* Neutral Palette */
-  --bg-deep: #050505;
-  --bg-surface: #121214;
-  --bg-elevated: #1C1C1E;
-  --bg-accent: #252528;
+  --bg-deep: #808080;
+  --bg-surface: #6b7280;
+  --bg-elevated: #4b5563;
+  --bg-accent: #374151;
   --text-primary: #F2F2F7;
   --text-secondary: #AEAEB2;
   --text-tertiary: #636366;

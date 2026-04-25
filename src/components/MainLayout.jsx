@@ -9,7 +9,7 @@ import {
   X
 } from 'lucide-react';
 
-const MainLayout = ({ children, role, onToggleSafety }) => {
+const MainLayout = ({ children, role, onToggleSafety, onLogout }) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
   const getRoleTitle = () => {
@@ -123,6 +123,19 @@ const MainLayout = ({ children, role, onToggleSafety }) => {
               <span className="badge badge-success">Connectivity: Optimal</span>
               {role === 'MANAGER' && <span className="badge badge-info">Nodes: 12 Active</span>}
             </div>
+            <button 
+              onClick={onLogout}
+              className="btn"
+              style={{ 
+                padding: '8px 16px', 
+                fontSize: '0.8rem', 
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid var(--glass-border)',
+                color: 'var(--text-secondary)'
+              }}
+            >
+              Logout
+            </button>
             <button style={{ 
               background: 'var(--bg-elevated)', 
               border: '1px solid var(--glass-border)',

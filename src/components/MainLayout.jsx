@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ShieldCheck, 
   LayoutDashboard, 
-  UserCircle, 
   HelpCircle, 
   Bell,
   Menu,
@@ -25,7 +24,6 @@ const MainLayout = ({ children, role, onToggleSafety }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Overview', active: true },
     { icon: ShieldCheck, label: 'Protocols', onClick: onToggleSafety },
-    { icon: UserCircle, label: 'Profile' },
     { icon: HelpCircle, label: 'Support' },
   ];
 
@@ -86,21 +84,6 @@ const MainLayout = ({ children, role, onToggleSafety }) => {
             ))}
           </nav>
 
-          <div className="user-profile" style={{ 
-            marginTop: 'auto',
-            padding: '16px',
-            background: 'rgba(255,255,255,0.03)',
-            borderRadius: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px'
-          }}>
-            <div style={{ width: '40px', height: '40px', background: 'var(--bg-accent)', borderRadius: '50%' }}></div>
-            <div>
-              <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{role} USER</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>Online</div>
-            </div>
-          </div>
         </aside>
       )}
 

@@ -4,7 +4,9 @@ const LoginPage = ({ onLogin }) => {
   const [selectedRole, setSelectedRole] = useState('MANAGER');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,6 +74,22 @@ const LoginPage = ({ onLogin }) => {
               required
             />
           </div>
+
+          <div className="input-group">
+            <label className="input-label">Phone Number (for GPS Tracking)</label>
+            <input 
+              type="tel" 
+              className="login-input" 
+              placeholder="+1 (555) 000-0000"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+            />
+            <p style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)', marginTop: '4px', marginLeft: '4px' }}>
+              Used for emergency location services and real-time tracking.
+            </p>
+          </div>
+
 
           <button 
             type="submit" 

@@ -73,18 +73,41 @@ function App() {
       {!role ? (
         <LoginPage onLogin={(selectedRole) => setRole(selectedRole)} />
       ) : (
-        <MainLayout role={role} onToggleSafety={toggleSafety} onLogout={() => setRole(null)}>
-          <AlertBanner incidents={activeIncidents} />
-          
-          {showSafety && <SafetyProcedures onClose={toggleSafety} />}
+        <>
+          <MainLayout role={role} onToggleSafety={toggleSafety} onLogout={() => setRole(null)}>
+            <AlertBanner incidents={activeIncidents} />
+            
+            {showSafety && <SafetyProcedures onClose={toggleSafety} />}
 
-          <div className="view-content">
-            {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} onTrigger={triggerAlert} />}
-            {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
-            {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} onToggleSafety={toggleSafety} onReportTriggered={triggerAlert} />}
+            <div className="view-content">
+              {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} onTrigger={triggerAlert} />}
+              {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
+              {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} onToggleSafety={toggleSafety} onReportTriggered={triggerAlert} />}
+            </div>
+          </MainLayout>
+
+          {/* Quick Role Switcher (Dashboard Only) */}
+          <div className="role-switcher" style={{
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+            background: 'rgba(10, 10, 12, 0.8)',
+            backdropFilter: 'blur(20px)',
+            padding: '8px',
+            borderRadius: '12px',
+            display: 'flex',
+            gap: '8px',
+            zIndex: 1000,
+            border: '1px solid var(--glass-border)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+          }}>
+            <button className={`btn ${role === 'MANAGER' ? 'btn-primary' : ''}`} onClick={() => setRole('MANAGER')} style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '8px' }}>Manager</button>
+            <button className={`btn ${role === 'STAFF' ? 'btn-primary' : ''}`} onClick={() => setRole('STAFF')} style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '8px' }}>Staff</button>
+            <button className={`btn ${role === 'GUEST' ? 'btn-primary' : ''}`} onClick={() => setRole('GUEST')} style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '8px' }}>Guest</button>
           </div>
-        </MainLayout>
+        </>
       )}
+
 
 
     </div>

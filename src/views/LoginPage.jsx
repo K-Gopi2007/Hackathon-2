@@ -27,10 +27,8 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div className="login-container">
-      <div className="landscape-bg"></div>
-      <div className="landscape-overlay"></div>
-      
       <div className="login-card glass-panel animate-slide-up">
+
         <div className="login-header">
           <span className="login-logo text-gradient">RCRS</span>
           <h1 className="login-title">Rapid Crisis Response</h1>

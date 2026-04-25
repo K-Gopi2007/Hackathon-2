@@ -254,9 +254,22 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   padding: var(--space-lg);
-  background: radial-gradient(circle at top right, var(--info-blue-glow), transparent 40%),
-              radial-gradient(circle at bottom left, var(--crisis-red-glow), transparent 40%);
+  background: #000; /* Solid Black */
+  position: relative;
+  overflow: hidden;
 }
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
 
 .login-card {
   width: 100%;

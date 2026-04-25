@@ -5,13 +5,12 @@ import GuestPortal from './views/GuestPortal';
 import AlertBanner from './components/AlertBanner';
 import SafetyProcedures from './components/SafetyProcedures';
 import MainLayout from './components/MainLayout';
-import LoginPage from './views/LoginPage';
+
 
 
 function App() {
-  const [role, setRole] = useState(null); // 'MANAGER', 'STAFF', 'GUEST', or null
-
-
+  const [role, setRole] = useState('MANAGER'); // 'MANAGER', 'STAFF', 'GUEST'
+  const [isOffline, setIsOffline] = useState(false);
   const [showSafety, setShowSafety] = useState(false);
   const [activeIncidents, setActiveIncidents] = useState([{
     id: 1,
@@ -69,25 +68,43 @@ function App() {
     <div className="app-container">
 
 
-      {!role ? (
-        <LoginPage onLogin={(selectedRole) => setRole(selectedRole)} />
-      ) : (
-        <MainLayout role={role} onToggleSafety={toggleSafety} onLogout={() => setRole(null)}>
-          <AlertBanner incidents={activeIncidents} />
-          
-          {showSafety && <SafetyProcedures onClose={toggleSafety} />}
+      <MainLayout role={role} onToggleSafety={toggleSafety} onLogout={() => setRole(null)}>
+        <AlertBanner incidents={activeIncidents} />
+        
+        {showSafety && <SafetyProcedures onClose={toggleSafety} />}
 
-          <div className="view-content">
-            {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} onTrigger={triggerAlert} />}
-            {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
-            {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} onToggleSafety={toggleSafety} onReportTriggered={triggerAlert} />}
-          </div>
-        </MainLayout>
-      )}
-
-
-
-
+        <div className="view-content">
+          {role === 'MANAGER' && <ManagerDashboard incidents={activeIncidents} onResolve={resolveIncident} onToggleSafety={toggleSafety} onTrigger={triggerAlert} />}
+          {role === 'STAFF' && <StaffInterface onTrigger={triggerAlert} activeIncidents={activeIncidents} onToggleSafety={toggleSafety} />}
+          {role === 'GUEST' && <GuestPortal activeIncidents={activeIncidents} onToggleSafety={toggleSafety} onReportTriggered={triggerAlert} />}
+        </div>
+      </MainLayout>
+      {/* Role Switcher (Demo Only) */}
+      <div className="role-switcher" style={{
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+        background: 'var(--bg-elevated)',
+        padding: '10px',
+        borderRadius: 'var(--radius-md)',
+        display: 'flex',
+        gap: '10px',
+        zIndex: 1000,
+        border: '1px solid var(--glass-border)',
+        boxShadow: 'var(--shadow-lg)'
+      }}>
+        <button className={`btn ${role === 'MANAGER' ? 'btn-primary' : ''}`} onClick={() => setRole('MANAGER')} style={{ padding: '6px 12px', fontSize: '0.8rem' }}>Manager</button>
+        <button className={`btn ${role === 'STAFF' ? 'btn-primary' : ''}`} onClick={() => setRole('STAFF')} style={{ padding: '6px 12px', fontSize: '0.8rem' }}>Staff</button>
+        <button className={`btn ${role === 'GUEST' ? 'btn-primary' : ''}`} onClick={() => setRole('GUEST')} style={{ padding: '6px 12px', fontSize: '0.8rem' }}>Guest</button>
+        <div style={{ width: '1px', background: 'var(--glass-border)', margin: '0 5px' }}></div>
+        <button 
+          className={`btn ${isOffline ? 'btn-danger' : 'btn-success'}`} 
+          onClick={() => setIsOffline(!isOffline)}
+          style={{ fontSize: '0.7rem', opacity: 0.8, padding: '6px 12px' }}
+        >
+          {isOffline ? 'OFFLINE' : 'ONLINE'}
+        </button>
+      </div>
     </div>
   );
 }

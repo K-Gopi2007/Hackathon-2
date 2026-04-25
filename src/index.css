@@ -247,136 +247,293 @@ h1, h2, h3 {
 .badge-danger { background: var(--crisis-red-glow); color: var(--crisis-red); border: 1px solid var(--crisis-red); }
 .badge-success { background: var(--safety-green-glow); color: var(--safety-green); border: 1px solid var(--safety-green); }
 
-/* Login Page Specific Styles */
+/* Login Page Specific Styles - Professional Command Center Theme */
 .login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-lg);
-  background: #000; /* Solid Black */
+  background: #000;
   position: relative;
   overflow: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
-.login-container::before {
+/* Cyber Grid Background */
+.login-bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 122, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 122, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  perspective: 1000px;
+  transform: rotateX(60deg) translateY(-100px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.login-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--info-blue-glow) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+  animation: floatGlow 20s infinite alternate ease-in-out;
+}
+
+@keyframes floatGlow {
+  0% { transform: translate(-10%, -10%); }
+  100% { transform: translate(10%, 10%); }
+}
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 600px;
+  background: rgba(10, 10, 12, 0.8);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+  z-index: 10;
+}
+
+.login-side-info {
+  flex: 1;
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, transparent 100%);
+  border-right: 1px solid var(--glass-border);
+  position: relative;
+}
+
+.login-side-info::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.05) 0%, transparent 70%);
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+  opacity: 0.03;
   pointer-events: none;
 }
 
-
-.login-card {
-  width: 100%;
-  max-width: 480px;
-  padding: var(--space-2xl) var(--space-xl);
-  text-align: center;
-  border-radius: var(--radius-lg);
+.login-form-area {
+  flex: 1.2;
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.login-header {
-  margin-bottom: var(--space-2xl);
-}
-
-.login-logo {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: var(--space-sm);
-  display: block;
-}
-
-.login-subtitle {
+.system-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-family: 'Monaco', 'Consolas', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-.role-selection {
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--safety-green);
+  box-shadow: 0 0 10px var(--safety-green-glow);
+}
+
+.login-branding h1 {
+  font-size: 3rem;
+  margin-bottom: var(--space-sm);
+}
+
+.login-branding p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.tech-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+}
+
+.spec-item {
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+}
+
+.spec-label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-tertiary);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.spec-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--info-blue);
+}
+
+.role-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-md);
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
 }
 
-.role-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
+.role-card {
   padding: var(--space-md);
+  background: rgba(255,255,255,0.03);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  position: relative;
+  overflow: hidden;
 }
 
-.role-option:hover {
-  background: rgba(255, 255, 255, 0.08);
+.role-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+.role-card.active {
+  background: rgba(0, 122, 255, 0.1);
   border-color: var(--info-blue);
-  transform: translateY(-4px);
+  box-shadow: inset 0 0 15px rgba(0, 122, 255, 0.2);
 }
 
-.role-option.active {
-  background: var(--info-blue-glow);
-  border-color: var(--info-blue);
-  box-shadow: 0 0 20px var(--info-blue-glow);
+.role-card.active::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--info-blue);
+  box-shadow: 0 -5px 15px var(--info-blue-glow);
 }
 
-.role-icon {
-  font-size: 1.5rem;
-  margin-bottom: 4px;
+.role-card-icon {
+  color: var(--text-secondary);
+  transition: color 0.3s;
 }
 
-.role-label {
-  font-size: 0.8rem;
-  font-weight: 600;
+.role-card.active .role-card-icon {
+  color: var(--info-blue);
+}
+
+.role-card-label {
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+.input-container {
+  position: relative;
+  margin-bottom: var(--space-lg);
 }
 
-.input-group {
-  text-align: left;
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  transition: color 0.3s;
 }
 
-.input-label {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  margin-bottom: var(--space-xs);
-  margin-left: 4px;
-}
-
-.login-input {
+.login-field {
   width: 100%;
-  background: var(--bg-accent);
+  background: rgba(255,255,255,0.04);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  color: var(--text-primary);
+  border-radius: 12px;
+  padding: 14px 14px 14px 44px;
+  color: #fff;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
-.login-input:focus {
+.login-field:focus {
   outline: none;
+  background: rgba(255,255,255,0.07);
   border-color: var(--info-blue);
-  background: var(--bg-elevated);
   box-shadow: 0 0 0 4px var(--info-blue-glow);
 }
 
-.login-footer {
-  margin-top: var(--space-xl);
-  font-size: 0.85rem;
-  color: var(--text-tertiary);
+.login-field:focus + .input-icon {
+  color: var(--info-blue);
 }
+
+.btn-login {
+  background: var(--info-blue);
+  color: #fff;
+  height: 56px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: var(--space-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-login::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s;
+}
+
+.btn-login:hover::after {
+  left: 100%;
+}
+
+@media (max-width: 900px) {
+  .login-wrapper {
+    flex-direction: column;
+    max-width: 450px;
+  }
+  .login-side-info {
+    padding: var(--space-xl);
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .tech-specs {
+    display: none;
+  }
+}
+
